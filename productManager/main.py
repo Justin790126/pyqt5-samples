@@ -5,6 +5,7 @@ from PyQt5.QtCore import *
 import sqlite3
 import addproduct, addmember, sellings, style
 from PIL import Image
+from interface.Widgets import UIinterface
 
 con=sqlite3.connect("products.db")
 cur=con.cursor()
@@ -347,14 +348,13 @@ class Main(QMainWindow):
         self.displayProducts()
         self.displayMembers()
 
-class DisplayMember(QWidget):
+class DisplayMember(UIinterface):
     def __init__(self):
        super().__init__()
        self.setWindowTitle("Member Details")
        self.setWindowIcon(QIcon("icons/icon.ico"))
        self.setGeometry(450, 150, 350, 600)
        self.setFixedSize(self.size())
-       self.UI()
        self.show()
 
     def widgets(self):
@@ -410,12 +410,9 @@ class DisplayMember(QWidget):
         self.setLayout(self.mainLayout)
         
 
-    def UI(self):
-        self.memeberDetails()
-        self.widgets()
-        self.layouts()
 
-    def memeberDetails(self):
+
+    def prepareDatas(self):
         global memberId
         query = "SELECT * FROM members WHERE member_id=?"
         member = cur.execute(query, (memberId,)).fetchone()
@@ -454,20 +451,16 @@ class DisplayMember(QWidget):
         else:
             QMessageBox.information(self, "Files Error", f"Fields empty")
 
-class DisplayProduct(QWidget):
+class DisplayProduct(UIinterface):
     def __init__(self):
         super().__init__()
+
         self.setWindowTitle("Product Details")
         self.setWindowIcon(QIcon("icons/icon.ico"))
         self.setGeometry(450,150,350,600)
         self.setFixedSize(self.size())
-        self.UI()
         self.show()
 
-    def UI(self):
-        self.productDetails()
-        self.widgets()
-        self.layouts()
 
     def widgets(self):
         self.product_Img = QLabel()
@@ -497,9 +490,7 @@ class DisplayProduct(QWidget):
         self.updateBtn = QPushButton("Update")
         self.updateBtn.clicked.connect(self.updateProduct)
 
-
-
-    def productDetails(self):
+    def prepareDatas(self):
         global productId
         query = "SELECT * FROM products WHERE product_id=?"
         product = cur.execute(query, (productId,)).fetchone()
@@ -557,7 +548,6 @@ class DisplayProduct(QWidget):
             img = Image.open(self.filename)
             img = img.resize(size)
             img.save("img_upload/{}".format(self.productImg))
-
 
     def updateProduct(self):
         global productId
