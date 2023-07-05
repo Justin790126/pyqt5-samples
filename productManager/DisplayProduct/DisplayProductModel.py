@@ -1,16 +1,14 @@
 
 import sqlite3
 from PyQt5.QtCore import QObject, pyqtSignal
-from utils.db import con,cur,productId
+from utils.db import *
 
-con = sqlite3.connect("products.db")
-cur = con.cursor()
 
 class DisplayProductModel(QObject):
 
-    initDataPrepareDone = pyqtSignal(tuple)
-    updateDBresult = pyqtSignal(tuple)
-    deleteDBresult = pyqtSignal(tuple)
+    initDataPrepareDone = utilsSignal["initDataPrepareDone"]
+    updateDBresult = utilsSignal["updateDBresult"]
+    deleteDBresult = utilsSignal["deleteDBresult"]
 
     def __init__(self):
         super().__init__()
@@ -35,7 +33,7 @@ class DisplayProductModel(QObject):
         try:
             cur.execute("DELETE FROM products WHERE product_id=?", (productId,))
             con.commit()
-            self.deleteDBresult.emit(("Info", "Product has been deleted"))
+            self.deleteDBresult.emit(("Info", "Product has been deleted", "close"))
 
         except Exception as e:
             self.deleteDBresult.emit(("Info", f"Delete error {e}"))

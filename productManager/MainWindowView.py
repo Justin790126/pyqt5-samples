@@ -9,17 +9,14 @@ import addmember
 import sellings
 import style
 from MainWindowModel import MainWindowModel
-
-con = sqlite3.connect("products.db")
-cur = con.cursor()
-productId = 0
-
+from utils.db import *
 
 class MainWindowView(QMainWindow):
 
     displayProductsInit = pyqtSignal()
     displayMembersInit = pyqtSignal()
     showDisplayProductWindow = pyqtSignal(int)
+    showDisplayMemberWindow = pyqtSignal(int)
 
 
     def __init__(self):
@@ -217,6 +214,18 @@ class MainWindowView(QMainWindow):
 
         productId = int(listProduct[0])
         self.showDisplayProductWindow.emit(productId)
+
+
+    def selectedMember(self):
+        global memberId
+        listMember = []
+        for i in range(0, 4):
+            listMember.append(self.membersTable.item(
+                self.membersTable.currentRow(), i).text())
+        memberId = int(listMember[0])
+
+        self.showDisplayMemberWindow.emit(memberId)
+
 
     ######################### Model emit event handler ############################
 

@@ -7,11 +7,11 @@ import addproduct, addmember, sellings, style
 from PIL import Image
 from interface.Widgets import UIinterface
 
-
+from utils.db import *
 class DisplayProductView(QWidget):
 
-    updateUI2DB = pyqtSignal(tuple)
-    delete2DB = pyqtSignal(int)
+    updateUI2DB = utilsSignal["updateUI2DB"]
+    delete2DB = utilsSignal["delete2DB"]
 
     def __init__(self, productId):
         super().__init__()
@@ -147,6 +147,8 @@ class DisplayProductView(QWidget):
 
     def showUpdateDBresult(self, title_content):
         QMessageBox.information(self, title_content[0], title_content[1])
+        if "close" in title_content:
+            self.close()
 
     def deleteProduct(self):
         productId=self.productId
