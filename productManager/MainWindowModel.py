@@ -1,10 +1,7 @@
 
 import sqlite3
 from PyQt5.QtCore import QObject, pyqtSignal
-
-con=sqlite3.connect("products.db")
-cur=con.cursor()
-productId = 0
+from utils.db import con,cur,productId
 
 
 class MainWindowModel(QObject):

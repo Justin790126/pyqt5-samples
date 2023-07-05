@@ -9,7 +9,7 @@ import addmember
 import sellings
 import style
 from MainWindowModel import MainWindowModel
-from DisplayProductCtrller import DisplayProduct
+
 con = sqlite3.connect("products.db")
 cur = con.cursor()
 productId = 0
@@ -19,6 +19,7 @@ class MainWindowView(QMainWindow):
 
     displayProductsInit = pyqtSignal()
     displayMembersInit = pyqtSignal()
+    showDisplayProductWindow = pyqtSignal(int)
 
 
     def __init__(self):
@@ -215,7 +216,7 @@ class MainWindowView(QMainWindow):
                 self.productsTable.currentRow(), i).text())
 
         productId = int(listProduct[0])
-        self.display = DisplayProduct()
+        self.showDisplayProductWindow.emit(productId)
 
     ######################### Model emit event handler ############################
 

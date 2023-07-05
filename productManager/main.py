@@ -9,10 +9,11 @@ from interface.Widgets import UIinterface
 from MainWindowView import MainWindowView
 from MainWindowModel import MainWindowModel
 
+from DisplayProduct.DisplayProductCtrller import DisplayProductCtrller
+
 
 con=sqlite3.connect("products.db")
 cur=con.cursor()
-productId = 0
 
 class MainCtrller():
     def __init__(self):
@@ -49,6 +50,8 @@ class MainCtrller():
         ################ interchange controller & view event #################################
         self.mainWindowView.displayProductsInit.connect(self.mainWindowModel.displayProducts)
         self.mainWindowView.displayMembersInit.connect(self.mainWindowModel.displayMembers)
+        self.mainWindowView.showDisplayProductWindow.connect(self.showDisplayProductCtrller)
+
     
 
         
@@ -102,6 +105,8 @@ class MainCtrller():
 
         self.displayMember = DisplayMember()
 
+    def showDisplayProductCtrller(self, event):
+        self.displayProductCtrller = DisplayProductCtrller(event)
 
 
 class DisplayMember(UIinterface):

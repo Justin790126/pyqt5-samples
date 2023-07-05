@@ -12,7 +12,7 @@ class UIinterface(QWidget):
     @abstractmethod
     def UI(self):
         print(msg_interface_format.format(self.UI.__name__))
-        self.prepareDatas()
+        
         self.widgets()
         self.layouts()
         
