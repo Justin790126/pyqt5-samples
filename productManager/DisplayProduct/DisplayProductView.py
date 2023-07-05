@@ -1,14 +1,12 @@
-import sys, os
+import os
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import sqlite3
-import addproduct, addmember, sellings, style
+import style
 from PIL import Image
 from interface.Widgets import UIinterface
-
 from utils.db import *
-class DisplayProductView(QWidget):
+class DisplayProductView(UIinterface):
 
     updateUI2DB = utilsSignal["updateUI2DB"]
     delete2DB = utilsSignal["delete2DB"]
@@ -145,10 +143,6 @@ class DisplayProductView(QWidget):
         else:
             self.showUpdateDBresult(("Info", "Files should not be empty"))
 
-    def showUpdateDBresult(self, title_content):
-        QMessageBox.information(self, title_content[0], title_content[1])
-        if "close" in title_content:
-            self.close()
 
     def deleteProduct(self):
         productId=self.productId

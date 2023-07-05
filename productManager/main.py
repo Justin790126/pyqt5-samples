@@ -3,7 +3,8 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import sqlite3
-import addproduct, addmember, sellings, style
+import addmember, sellings
+import style
 
 
 from MainWindowView import MainWindowView
@@ -11,9 +12,8 @@ from MainWindowModel import MainWindowModel
 
 from DisplayProduct.DisplayProductCtrller import DisplayProductCtrller
 from DisplayMember.DisplayMemberCtrller import DisplayMemberCtrller
+from AddProduct.AddProductCtrller import AddProductCtrller
 
-con=sqlite3.connect("products.db")
-cur=con.cursor()
 
 class MainCtrller():
     def __init__(self):
@@ -53,11 +53,10 @@ class MainCtrller():
         self.mainWindowView.showDisplayProductWindow.connect(self.showDisplayProductCtrller)
         self.mainWindowView.showDisplayMemberWindow.connect(self.showDisplayMemberCtrller)
 
-    
-
         
     def funcAddProduct(self):
-        self.newProduct = addproduct.AddProduct()
+        self.newProduct = AddProductCtrller()
+        
 
     def funcAddMember(self):
         self.newMember = addmember.AddMember()

@@ -3,9 +3,9 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from utils.db import *
 import style
+from interface.Widgets import UIinterface
 
-
-class DisplayMemberView(QWidget):
+class DisplayMemberView(UIinterface):
 
     updateUI2DB = utilsSignal["updateUI2DB"]
     delete2DB = utilsSignal["delete2DB"]
@@ -86,11 +86,6 @@ class DisplayMemberView(QWidget):
         self.mainLayout.addWidget(self.topFrame)
         self.mainLayout.addWidget(self.bottomFrame)
         self.setLayout(self.mainLayout)
-
-    def showUpdateDBresult(self, title_content):
-        QMessageBox.information(self, title_content[0], title_content[1])
-        if "close" in title_content:
-            self.close()
 
     def deleteMember(self):
         memberId = self.memberId

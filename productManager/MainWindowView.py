@@ -3,12 +3,7 @@ import os
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import sqlite3
-import addproduct
-import addmember
-import sellings
 import style
-from MainWindowModel import MainWindowModel
 from utils.db import *
 
 class MainWindowView(QMainWindow):

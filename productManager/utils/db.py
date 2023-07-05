@@ -10,7 +10,8 @@ utilsSignal = {
     "initDataPrepareDone": pyqtSignal(tuple),
     "updateUI2DB": pyqtSignal(tuple),
     "delete2DB": pyqtSignal(int),
+    "add2DB": pyqtSignal(tuple),
     "updateDBresult": pyqtSignal(tuple),
-    "deleteDBresult": pyqtSignal(tuple)
-
+    "deleteDBresult": pyqtSignal(tuple),
+    "addDBresult": pyqtSignal(tuple)
 }
