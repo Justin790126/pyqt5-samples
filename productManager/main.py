@@ -2,7 +2,7 @@ import sys, os
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import productManager.Sellings.sellings as sellings
+
 
 
 
@@ -13,6 +13,7 @@ from DisplayProduct.DisplayProductCtrller import DisplayProductCtrller
 from DisplayMember.DisplayMemberCtrller import DisplayMemberCtrller
 from AddProduct.AddProductCtrller import AddProductCtrller
 from AddMember.AddMemberCtrller import AddMemberCtrller
+from Sellings.SellingsCtrller import SellingsCtrller
 
 
 class MainCtrller():
@@ -62,7 +63,7 @@ class MainCtrller():
         self.newMember = AddMemberCtrller()
 
     def funcSellProduct(self):
-        self.sell = sellings.SellProducts()
+        self.sell = SellingsCtrller()
 
     
     def tabChanged(self):

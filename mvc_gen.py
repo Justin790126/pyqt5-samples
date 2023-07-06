@@ -24,19 +24,20 @@ def writeModelFile(folder_path, class_name):
         "from PyQt5.QtWidgets import *\n"
         "from PyQt5.QtGui import *\n"
         "from PyQt5.QtCore import *\n"
+        "#from utils.db import *\n"
         "########## import DB / utils here ##########\n"
         "\n"
         f"class {class_name}Model(QObject):\n"
         "\n"
-        "   ########## #add custom signal here ##########\n"
-        "   customSignal = pyqtSignal(tuple)\n"
+        "    ########## #add custom signal here ##########\n"
+        "    customSignal = pyqtSignal(tuple)\n"
         "\n"
-        "   def __init__(self):\n"
-        "       super().__init__()\n"
+        "    def __init__(self):\n"
+        "        super().__init__()\n"
         "\n"
         "\n"
-        "   def query_db(self, queryArgs):\n"
-        "       pass\n"
+        "    def query_db(self, queryArgs):\n"
+        "        pass\n"
         "\n"
     )
     fp.close()
@@ -57,31 +58,31 @@ def writeViewFile(folder_path, class_name):
         "\n"
         f"class {class_name}View(QWidget):\n"
         "\n"
-        "   ########## #add custom signal here ##########\n"
-        "   customSignal = pyqtSignal(tuple)\n"
+        "    ########## #add custom signal here ##########\n"
+        "    customSignal = pyqtSignal(tuple)\n"
         "\n"
-        "   def __init__(self):\n"
-        "       super().__init__()\n"
-        "       self.setWindowTitle(\"Window Title here\")"
-        "       #self.setWindowIcon(QIcon(\"icons/icon.ico\"))"
-        "       self.setGeometry(450, 150, 350, 550)\n"
-        "       self.setFixedSize(self.size())\n"
-        "       self.UI()\n"
-        "       self.show()\n"
+        "    def __init__(self):\n"
+        "        super().__init__()\n"
+        "        self.setWindowTitle(\"Window Title here\")\n"
+        "        #self.setWindowIcon(QIcon(\"icons/icon.ico\"))\n"
+        "        self.setGeometry(450, 150, 350, 550)\n"
+        "        self.setFixedSize(self.size())\n"
+        "        self.UI()\n"
+        "        self.show()\n"
         "\n"
         "\n"
-        "   def UI(self):\n"
-        "       self.widgets()\n"
-        "       self.layouts()\n"
+        "    def UI(self):\n"
+        "        self.widgets()\n"
+        "        self.layouts()\n"
         "\n"
-        "   def widgets(self):\n"
-        "       pass\n"
+        "    def widgets(self):\n"
+        "        pass\n"
         "\n"
-        "   def layouts(self):\n"
-        "       pass\n"
+        "    def layouts(self):\n"
+        "        pass\n"
         "\n"
-        "   def closeEvent(self, event):\n"
-        "       pass\n"
+        "    def closeEvent(self, event):\n"
+        "        pass\n"
         "\n"
 
     )
@@ -104,14 +105,14 @@ def writeCtrllerFile(folder_path, class_name):
         f"from {class_name}.{class_name}Model import {class_name}Model\n"
         f"from {class_name}.{class_name}View import {class_name}View\n"
         "\n"
-        f"class {class_name}():\n"
+        f"class {class_name}Ctrller():\n"
         "\n"
-        "   ########## #add custom signal here ##########\n"
-        "   customSignal = pyqtSignal(tuple)\n"
+        "    ########## #add custom signal here ##########\n"
+        "    customSignal = pyqtSignal(tuple)\n"
         "\n"
-        "   def __init__(self):\n"
-        f"       self.model = {class_name}Model()\n"
-        f"       self.view = {class_name}View()\n"
+        "    def __init__(self):\n"
+        f"        self.model = {class_name}Model()\n"
+        f"        self.view = {class_name}View()\n"
         "\n"
 
     )
@@ -155,7 +156,7 @@ def main():
 
   
     try:
-        opts,args = getopt.getopt(sys.argv[1:],'ahf:c:',['input=','output=','symble=','oddeven=','help'])
+        opts,args = getopt.getopt(sys.argv[1:],'hf:c:',['input=','output=','symble=','oddeven=','help'])
         print(args, opts)
 
       
@@ -170,9 +171,6 @@ def main():
         
 
         ############## parse arguments ##############
-        if opt_name in ('-a', '--all'):
-            initVal["gen_all"] = True
-            continue
         if opt_name in ('-h','--help'):
             continue
         if opt_name in ('-f','--folder'):
@@ -195,3 +193,6 @@ def main():
 if __name__ == "__main__":
     main()
 
+
+# usage:
+# python3 mvc_gen.py -f ./productManager/ -c ConfirmWindow
