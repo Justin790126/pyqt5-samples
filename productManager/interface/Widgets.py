@@ -6,17 +6,19 @@ class UIinterface(QWidget):
     @abstractmethod
     def __init__(self):
         super().__init__()
-        self.UI()
     
+    def showUpdateDBresult(self, title_content):
+        QMessageBox.information(self, title_content[0], title_content[1])
+        if "close" in title_content:
+            self.close()
 
     @abstractmethod
     def UI(self):
         print(msg_interface_format.format(self.UI.__name__))
-        self.prepareDatas()
+        
         self.widgets()
         self.layouts()
         
-
     @abstractmethod
     def widgets(self):
         print(msg_interface_format.format(self.widgets.__name__))

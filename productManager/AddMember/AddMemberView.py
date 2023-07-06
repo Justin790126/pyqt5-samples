@@ -1,16 +1,15 @@
-import sys, os
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import sqlite3
-from PIL import Image
+from utils.db import *
+from interface.Widgets import UIinterface
 
-con=sqlite3.connect("products.db")
-cur=con.cursor()
 
-defaultImg = "store.png"
 
-class AddMember(QWidget):
+class AddMemberView(UIinterface):
+
+    add2DB = utilsSignal["add2DB"]
+
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Add Member")
@@ -43,7 +42,6 @@ class AddMember(QWidget):
         self.phoneEntry.setPlaceholderText("Enter phone number")
 
         self.submitBtn = QPushButton("Submit")
-        self.submitBtn.clicked.connect(self.addMember)
 
     def layouts(self):
         self.mainLayout = QVBoxLayout()
@@ -70,23 +68,19 @@ class AddMember(QWidget):
         self.mainLayout.addWidget(self.bottomFrame)
         self.setLayout(self.mainLayout)
 
+    def clearText(self):
+        self.nameEntry.setText("")
+        self.surnameEntry.setText("")
+        self.phoneEntry.setText("")
+
     def addMember(self):
         name = self.nameEntry.text()
         surname = self.surnameEntry.text()
         phone = self.phoneEntry.text()
 
         if name and surname and phone != "":
-            try:
-                query = "INSERT INTO 'members' (member_name, member_surname, member_phone) VALUES(?,?,?)"
-                con.execute(query, (name, surname, phone))
-                QMessageBox.information(self, "Add Member Success", "Add Member Success")
-                con.commit()
-
-                self.nameEntry.setText("")
-                self.surnameEntry.setText("")
-                self.phoneEntry.setText("")
-            except Exception as e:
-                QMessageBox.information(self, "Add Member Failure", f"Add Member Failure with {e}")
+            self.add2DB.emit((name, surname, phone))
+            
         else:
             QMessageBox.information(self, "Add Member Failure", "Files can not be empty")
    

@@ -1,16 +1,19 @@
-import sys, os
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import sqlite3
+from utils.db import *
 from PIL import Image
-
-con=sqlite3.connect("products.db")
-cur=con.cursor()
+from interface.Widgets import UIinterface
+import os
 
 defaultImg = "store.png"
 
-class AddProduct(QWidget):
+class AddProductView(UIinterface):
+
+    updateUI2DB = utilsSignal["updateUI2DB"]
+    delete2DB = utilsSignal["delete2DB"]
+    add2DB = utilsSignal["add2DB"]
+
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Add Product")
@@ -23,6 +26,7 @@ class AddProduct(QWidget):
     def UI(self):
         self.widgets()
         self.layouts()
+
 
     def widgets(self):
         ######### widgets of top layout #########
@@ -40,9 +44,9 @@ class AddProduct(QWidget):
         self.qoutaEntry = QLineEdit()
         self.qoutaEntry.setPlaceholderText("Enter qouta of product")
         self.uploadBtn = QPushButton("Upload")
-        self.uploadBtn.clicked.connect(self.uploadImg)
+        
         self.submitBtn = QPushButton("Submit")
-        self.submitBtn.clicked.connect(self.addProduct)
+        
 
     def layouts(self):
         self.mainLayout = QVBoxLayout()
@@ -80,6 +84,7 @@ class AddProduct(QWidget):
             img = Image.open(self.filename)
             img = img.resize(size)
             img.save("img_upload/{0}".format(defaultImg))
+            self.showUpdateDBresult(("Upload result", "upload stop"))
 
     def addProduct(self):
         global defaultImg
@@ -87,16 +92,10 @@ class AddProduct(QWidget):
         manufacturer = self.manufacturerEntry.text()
         price = self.priceEntry.text()
         qouta = self.qoutaEntry.text()
-
+        print((name, manufacturer, price, qouta, defaultImg))
         if (name and manufacturer and price and qouta != ""):
-            try:
-                query = "INSERT INTO 'products' (product_name,product_manufacturer,product_price,product_qouta,product_img) VALUES(?,?,?,?,?)"
-                con.execute(query, (name, manufacturer, price, qouta, defaultImg))
-                con.commit()
-                QMessageBox.information(self, "Add Product Successfully", "Add Product Successfully")
-                
-            except Exception as e:
-                QMessageBox.information(self, "Add Product Error", f"Error: {e}")
+            self.add2DB.emit((name, manufacturer, price, qouta, defaultImg))
+            
         else:
             QMessageBox.information(self, "Info", "Fileds can not be empty!!")
 
