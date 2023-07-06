@@ -19,7 +19,6 @@ class UIinterface(QWidget):
         self.widgets()
         self.layouts()
         
-
     @abstractmethod
     def widgets(self):
         print(msg_interface_format.format(self.widgets.__name__))

@@ -2,9 +2,8 @@ import sys, os
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import sqlite3
-import addmember, sellings
-import style
+import productManager.Sellings.sellings as sellings
+
 
 
 from MainWindowView import MainWindowView
@@ -13,6 +12,7 @@ from MainWindowModel import MainWindowModel
 from DisplayProduct.DisplayProductCtrller import DisplayProductCtrller
 from DisplayMember.DisplayMemberCtrller import DisplayMemberCtrller
 from AddProduct.AddProductCtrller import AddProductCtrller
+from AddMember.AddMemberCtrller import AddMemberCtrller
 
 
 class MainCtrller():
@@ -59,7 +59,7 @@ class MainCtrller():
         
 
     def funcAddMember(self):
-        self.newMember = addmember.AddMember()
+        self.newMember = AddMemberCtrller()
 
     def funcSellProduct(self):
         self.sell = sellings.SellProducts()
